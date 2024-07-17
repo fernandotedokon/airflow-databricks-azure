@@ -1,4 +1,9 @@
 # Databricks notebook source
+dbutils.widgets.text("data_execucao", "")
+data_execucao = dbutils.widgets.get("data_execucao")
+
+# COMMAND ----------
+
 import requests
 from pyspark.sql.functions import lit
 
@@ -41,3 +46,16 @@ def save_file_parquet(conversoes_extraidas):
         .save(caminho_completo)
     
     print(f"Os arquivos foram salvos em {caminho_completo}")
+
+# COMMAND ----------
+
+cotacoes = extracting_data(data_execucao)
+save_file_parquet(cotacoes)
+
+# COMMAND ----------
+
+display(dbutils.fs.ls("dbfs:/databricks-results/01_transformation_initial/2024/07"))
+
+# COMMAND ----------
+
+
