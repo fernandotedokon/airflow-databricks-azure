@@ -24,10 +24,10 @@ df_moedas = df_moedas.withColumn("data", to_date("data"))
 
 # COMMAND ----------
 
-resultado_taxas_conversao = df_moedas.groupBy("data") \
-           .pivot("moeda") \
-           .agg(first("taxa")) \
-               
+resultado_taxas_conversao = df_moedas.groupBy("data")\
+           .pivot("moeda")\
+           .agg(first("taxa"))\
+            .orderBy("data", ascending=False)  
 
 
 # COMMAND ----------
