@@ -1,8 +1,4 @@
 # Databricks notebook source
-# MAGIC %pip install kaleido slack-sdk
-
-# COMMAND ----------
-
 import os
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -11,8 +7,8 @@ import pyspark.pandas as ps
 
 # COMMAND ----------
 
-slack_token = "xoxb-7435732502853-7432093199014-P7rVvo7KTze9555HJUb2hfkI"
-client = WebClient(token=slack_token)
+slack_token_v2 = "xxxx"
+client = WebClient(token=slack_token_v2)
 
 
 # COMMAND ----------
@@ -30,16 +26,8 @@ display(dbutils.fs.ls("dbfs:/databricks-results/02_transformation_end/valores_re
 
 # COMMAND ----------
 
-display(nome_arquivo)
-
-# COMMAND ----------
-
 path = "/dbfs/databricks-results/02_transformation_end/valores_reais/" + nome_arquivo
 
-
-# COMMAND ----------
-
-display(path)
 
 # COMMAND ----------
 
@@ -64,7 +52,6 @@ ps.read_csv("dbfs:/databricks-results/02_transformation_end/valores_reais/").hea
 # COMMAND ----------
 
 df_valores_reais = ps.read_csv("dbfs:/databricks-results/02_transformation_end/valores_reais/")
-df_valores_reais.head()
 
 
 # COMMAND ----------
@@ -85,10 +72,6 @@ df_valores_reais.plot.line(x="data", y='USD')
 for moeda in df_valores_reais.columns[1:]:
     fig = df_valores_reais.plot.line(x="data", y=moeda)
     fig.write_image(f"./imagens/{moeda}.png")
-
-# COMMAND ----------
-
-!ls ./imagens
 
 # COMMAND ----------
 
